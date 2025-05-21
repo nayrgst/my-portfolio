@@ -8,7 +8,7 @@ import '@fontsource/bebas-neue';
 import '@fontsource/raleway/800.css';
 import '@fontsource/montserrat/700.css';
 import '@fontsource/playfair-display/700.css';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Sora } from 'next/font/google';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,6 +18,11 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const sora = Sora({
+  subsets: ['latin'],
+  variable: '--font-sora',
 });
 
 export const metadata: Metadata = {
@@ -32,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${sora} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
