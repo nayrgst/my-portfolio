@@ -1,31 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import useEmblaCarousel from 'embla-carousel-react';
+import { useEffect, useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import { EmblaOptionsType } from 'embla-carousel';
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 interface TechProps {
   name: string;
   icon: string;
 }
 
-type PropType = {
-  options?: EmblaOptionsType;
-};
-
-export default function Techs({ options }: PropType) {
-  const [emblaRef] = useEmblaCarousel(
-    {
-      ...options,
-      align: 'center',
-      containScroll: false,
-      loop: true,
-    },
-    [Autoplay({ delay: 2500, stopOnInteraction: false })]
-  );
-
+export default function Techs() {
   const [techs, setTechs] = useState<TechProps[]>([]);
 
   useEffect(() => {
@@ -40,33 +32,50 @@ export default function Techs({ options }: PropType) {
       <div className="w-full h-screen">
         <section className="text-center space-y-2 my-20">
           <h1 className="text-6xl uppercase text-primary">Pedro Ryan</h1>
-          <h2 className="text-xl text-muted-foreground font-light">Desevolvedor Web Full-Stack</h2>
+          <h2 className="text-xl text-muted-foreground font-light">Desenvolvedor Web Full-Stack</h2>
         </section>
 
         <section className="w-full flex flex-col items-center justify-center gap-8">
           <h2 className="text-3xl md:text-5xl font-bold">Tecnologias</h2>
 
-          <div ref={emblaRef} className="overflow-hidden w-1/3 px-4 border p-30 rounded-4xl">
-            <div className="flex">
+          <Carousel
+            opts={{
+              align: 'center',
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 2500,
+                stopOnInteraction: false,
+              }),
+            ]}
+            className="w-full max-w-[90%] md:max-w-[60%] border-2 rounded-xl py-25"
+          >
+            <CarouselContent>
               {techs.map((tech, index) => (
-                <div
-                  key={index}
-                  className="group flex-shrink-0 w-32 h-32 md:w-40 md:h-40 rounded-3xl border-2 p-4 flex items-center justify-center relative overflow-hidden hover:shadow-lg transition mx-3" // Adicionado mx-3 em vez de gap
-                >
-                  <Image
-                    src={tech.icon}
-                    alt={tech.name}
-                    width={100}
-                    height={100}
-                    className="object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute bottom-2 text-center text-sm md:text-base">
-                    {tech.name}
+                <CarouselItem key={index} className="basis-[70%] md:basis-[30%] shrink-0">
+                  <div className="group dark:bg-neutral-300  dark:text-black relative w-full h-40 rounded-xl border p-4 flex flex-col items-center justify-center overflow-hidden hover:shadow-lg transition dark:hover:text-white hover:text-white">
+                    <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity duration-300 z-10 rounded-xl" />
+
+                    <div className="rounded-lg p-4 z-20">
+                      <Image
+                        src={tech.icon}
+                        alt={tech.name}
+                        width={70}
+                        height={70}
+                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+
+                    <div className="mt-2 text-center text-sm md:text-base z-20">{tech.name}</div>
                   </div>
-                </div>
+                </CarouselItem>
               ))}
-            </div>
-          </div>
+            </CarouselContent>
+
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </section>
       </div>
     </main>
