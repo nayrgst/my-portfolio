@@ -1,4 +1,3 @@
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/theme-provider';
 
@@ -36,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="font-[sora]">
       <body className={`${geistSans.variable} ${geistMono.variable} ${sora} antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -44,7 +43,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
           {children}
           <Footer />
         </ThemeProvider>
